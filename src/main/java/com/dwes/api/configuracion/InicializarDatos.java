@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.dwes.api.entidades.Categoria;
 import com.dwes.api.entidades.Ingrediente;
 import com.dwes.api.entidades.Jabon;
 import com.dwes.api.entidades.Producto;
 import com.dwes.api.entidades.enumerados.TipoDePiel;
+import com.dwes.api.repositorios.CategoriaRepository;
 import com.dwes.api.repositorios.JabonRepository;
 import com.dwes.api.repositorios.ProductoRepository;
 import com.github.javafaker.Faker;
@@ -21,7 +23,8 @@ public class InicializarDatos implements CommandLineRunner {
 
     @Autowired
     private JabonRepository jabonRepository;
-    
+    @Autowired
+    private CategoriaRepository categoriaRepository;
     Faker faker = new Faker();
     
     
@@ -29,6 +32,12 @@ public class InicializarDatos implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 
+        for (int i = 0; i < 100; i++) {
+            Categoria categoria = new Categoria();
+            categoria.setNombre(faker.commerce().productName());
+            categoria.setDescripcion(faker.lorem().sentence());
+            categoriaRepository.save(categoria);
+            }
 
         for (int i = 0; i < 100; i++) {
             Jabon jabon = new Jabon();

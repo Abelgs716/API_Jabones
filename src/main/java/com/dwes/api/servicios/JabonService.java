@@ -5,11 +5,12 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.dwes.api.entidades.Ingrediente;
 import com.dwes.api.entidades.Jabon;
 import com.dwes.api.entidades.enumerados.TipoDePiel;
-
+@Service
 public interface JabonService {
 	Page<Jabon> findAll(Pageable pageable);
     Optional<Jabon> findById(Long jabonId);
