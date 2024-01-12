@@ -1,7 +1,9 @@
 package com.dwes.api.controladores;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,6 +148,63 @@ public class JabonController {
         return ResponseEntity.noContent().build();
     }
 
+    
+    @GetMapping("/{id}/tipo_piel")
+
+	@Operation(summary = "Obtener tipo de piel de un jabón por ID", description = "Devuelve el tipo de piel de un jabón específico por su ID")
+
+	@ApiResponse(responseCode = "200", description = "Tipo de piel obtenido exitosamente")
+
+	@ApiResponse(responseCode = "404", description = "Jabón no encontrado")
+
+	public ResponseEntity<TipoDePiel> getTipoDePielByJabonId(@PathVariable Long id) {
+
+		logger.info("## getTipoDePielByJabonId ## id: {}", id);
+
+		Optional<Jabon> jabonOptional = jabonService.findById(id);
+
+		if (jabonOptional.isPresent()) {
+
+			TipoDePiel tipoDePiel = jabonOptional.get().getTipoDePiel();
+
+			return ResponseEntity.ok(tipoDePiel);
+
+		} else {
+
+			return ResponseEntity.notFound().build();
+
+		}
+
+	}
+
+
+	@GetMapping("/tipo_piel")
+
+	@Operation(summary = "Obtener tipos de piel", description = "Devuelve una lista de tipos de piel")
+
+	@ApiResponse(responseCode = "200", description = "Lista de tipos de piel obtenida exitosamente")
+
+	@ApiResponse(responseCode = "204", description = "No hay tipos de piel disponibles")
+
+	@ApiResponse(responseCode = "400", description = "Parámetros de solicitud incorrectos")
+
+	public ResponseEntity<List<TipoDePiel>> getAllTiposDePiel() {
+
+		logger.info("## getAllTiposDePiel ##");
+
+		List<TipoDePiel> tiposDePiel = Arrays.asList(TipoDePiel.values());
+
+		if (tiposDePiel.isEmpty()) {
+
+			return ResponseEntity.noContent().build();
+
+		} else {
+
+			return ResponseEntity.ok(tiposDePiel);
+
+		}
+
+	}
     @PatchMapping("/{id}")
     @Operation(summary = "Actualizar parcialmente un jabón", description = "Actualiza parcialmente los detalles de un jabón")
     @ApiResponse(responseCode = "200", description = "Jabón actualizado parcialmente")
