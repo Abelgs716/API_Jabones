@@ -26,12 +26,12 @@ public class Producto {
   
     private String nombre;
 
- 
     private Double precio;
 
-  
     private String descripcion;
 
+
+	private Integer stock;
  
   
     
@@ -54,7 +54,6 @@ public class Producto {
 		this.categorias = categorias;
 	}
 
-	private Integer stock;
     
     private String imagenUrl;
 

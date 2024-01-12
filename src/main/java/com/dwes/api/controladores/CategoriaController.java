@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/categorias")
@@ -70,6 +71,31 @@ public class CategoriaController {
         // Devuelve una respuesta con la categoría creada y el código de estado 201 (CREATED)
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaCreada);
     }
+    
+    
+	@PatchMapping("/{id}")
+	@Operation(summary = "Actualizar parcialmente una categoría", description = "Actualiza parcialmente los detalles de una categoría")
+	@ApiResponse(responseCode = "200", description = "Categoría actualizada parcialmente")
+	@ApiResponse(responseCode = "404", description = "Categoría no encontrada para actualización parcial")
+	public ResponseEntity<Categoria> actualizarParcialmenteCategoria(@PathVariable Long id,
+			@RequestBody Map<String, Object> updates) {
+		if (!categoriaService.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		Categoria categoriaActual = categoriaService.findById(id)
+				.orElseThrow();
+
+		if (updates.containsKey("nombre")) {
+			categoriaActual.setNombre((String) updates.get("nombre"));
+		}
+		if (updates.containsKey("descripcion")) {
+			categoriaActual.setDescripcion((String) updates.get("descripcion"));
+
+		}
+		Categoria categoriaActualizada = categoriaService.save(categoriaActual);
+		return ResponseEntity.ok(categoriaActualizada);
+
+	}
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar una categoría", description = "Actualiza los detalles de una categoría existente")

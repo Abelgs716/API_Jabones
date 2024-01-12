@@ -11,7 +11,7 @@ public class SpringDocConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
             .group("jabones-public")
-            .pathsToMatch("/api/v1/jabones/**")
+            .pathsToMatch("/api/v1/jabones/**","/api/v1/categorias/**")
             .build();
     }
     

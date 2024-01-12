@@ -19,6 +19,7 @@ public class SecurityConfig{
         .authorizeHttpRequests((authz) -> authz
                // .requestMatchers(HttpMethod.GET, "/api/v1/jabones/**").permitAll() 
                 .requestMatchers("/api/v1/jabones/**").permitAll() // Permite todas las solicitudes a /api/v1/jabones/**
+                .requestMatchers("/api/v1/categorias/**").permitAll() 
                 .requestMatchers("/**").permitAll() // Permite todas las solicitudes a Swagger UI
                 .anyRequest().authenticated()); // Todas las demás solicitudes necesitan autenticación
         
